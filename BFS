@@ -1,0 +1,82 @@
+// Node
+class Node {
+    var x = 0
+    var y = 0
+    var length = -1
+    init (_ x: Int, _ y: Int, _ length: Int) {
+        self.x = x
+        self.y = y
+        self.length = length
+    }
+}
+
+// Queue
+class Queue {
+    var arr = [Node]()
+    func enqueue(val: Node) {arr.append(val)}
+    func dequeue() -> Node {return arr.removeAtIndex(0)}
+    func isEmpty() -> Bool {return arr.count == 0}
+}
+
+// chack validity for 8x8 chessboard
+func isValid(x: Int, _ y: Int) -> Bool {
+    if x < 1 || x > 8 || y < 1 || y > 8 {return false}
+    return true
+}
+
+// structure to hold visited coordinates
+struct Coord : Equatable {
+    var x : Int
+    var y : Int
+    
+    init(_ x: Int, _ y: Int) {
+        self.x = x
+        self.y = y
+    }
+}
+// required to conform to Equatable protocol
+func == (lhs: Coord, rhs: Coord) -> Bool {
+    return lhs.x == rhs.x && lhs.y == rhs.y
+}
+
+func getMoves (node: Node, visitedArr: [Coord]) -> [Node] {
+    var arr : [Node] = []
+    var xx = [2, 1,  2,  1, -1, -2, -2, -1]
+    var yy = [1, 2, -1, -2, -2, -1,  1,  2]
+    
+    for i in (0..<8) {
+        let x = node.x + xx[i]
+        let y = node.y + yy[i]
+        if isValid(x, y) && !visitedArr.contains(Coord(x,y)) {
+            arr.append(Node(x, y, node.length+1))
+        }
+    }
+    return arr
+}
+
+
+// RUN BFS
+// starting coords
+var start = Coord(1,1)
+// target coords
+var target = Coord(7,8)
+// keep visited coords here
+var visitedArr = [Coord]()
+var queue = Queue()
+
+queue.enqueue(Node(start.x, start.y, 0))
+var length = 0
+while !queue.isEmpty() {
+    var node = queue.dequeue()
+    if Coord(node.x, node.y) == target {
+        length = node.length
+        break
+    }
+    visitedArr.append(Coord(node.x, node.y))
+    var moves = getMoves(node, visitedArr: visitedArr)
+    for i in (0..<moves.count) {
+        queue.enqueue(moves[i])
+    }
+}
+
+print(length)
