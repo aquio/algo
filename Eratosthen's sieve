@@ -1,0 +1,17 @@
+func primesCnt(n: Int) -> Int {
+    if n < 2 {return 0}
+    var arr = [Bool](count: n, repeatedValue: true)
+    var primes = 0
+    
+    for i in (2..<arr.count) {
+        var j = i + i
+        if arr[i] {
+            primes = primes + 1
+            while j < arr.count {
+                arr[j] = false
+                j = j + i
+            }
+        }
+    }
+    return primes
+}
