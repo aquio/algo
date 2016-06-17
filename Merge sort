@@ -1,0 +1,33 @@
+// Merge sort
+
+func mergeSort(arr: [Int]) -> [Int] {
+    let mid = arr.count / 2
+    if arr.count == 1 {return arr}
+    var left = mergeSort(Array(arr[0..<mid]))
+    var right = mergeSort(Array(arr[mid..<arr.count]))
+    
+    var i = 0, j = 0
+    var out = [Int]()
+    while i < left.count && j < right.count {
+        if left[i] <= right[j] {
+            out.append(left[i])
+            i = i + 1
+        } else {
+            out.append(right[j])
+            j = j + 1
+        }
+    }
+    
+    if i < left.count {
+        out = out + left[i..<left.count]
+    }
+    
+    if j < right.count {
+        out = out + right[j..<right.count]
+    }
+    
+    return out
+}
+
+var arr = [5,6,3,7,4,5,7,9,0]
+print(mergeSort(arr))
