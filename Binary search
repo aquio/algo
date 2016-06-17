@@ -1,0 +1,17 @@
+// Binary search
+
+func binarySearch(arr: [Int], _ x: Int) -> Bool {
+    if arr.count == 0 {return false}
+    print(arr)
+    let mid = arr.count / 2
+    if x < arr[mid] {
+        return binarySearch(Array(arr[0..<mid]), x)
+    } else if x > arr[mid] {
+        return binarySearch(Array(arr[mid+1..<arr.count]), x)
+    }
+    
+    return true
+} 
+
+let arr = [1,2,3,4,5,7,8,9, 10]
+print(binarySearch(arr, 6))
