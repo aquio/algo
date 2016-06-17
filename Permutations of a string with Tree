@@ -1,0 +1,52 @@
+// permutations of str using Trees
+class TreeNode {
+    var val: [String] = []
+    var children: [TreeNode] = []
+    
+    func containsVal(s: String) -> Bool {
+        if val.contains(s) {return true}
+        return false
+    }
+    
+    func addChild(n: TreeNode) {
+        children.append(n)
+    }
+    
+    init(val: [String]) {
+        self.val = val
+    }
+}
+
+func constructTree(node: TreeNode, _ str: [String]) {
+    var inserted = false
+    for s in str {
+        if !node.containsVal(s) {
+            let n = TreeNode(val: node.val + [s])
+            node.addChild(n)
+            inserted = true
+        }
+    }
+    
+    if inserted {
+        for ch in node.children {
+            constructTree(ch, str)
+        }
+        
+    }
+}
+
+func printNode(node: TreeNode) {
+    if node.children.count != 0 {
+        for ch in node.children {
+            printNode(ch)
+        }
+    } else {
+        print(String(node.val))
+    }
+    
+}
+
+var root = TreeNode(val: [])
+var str = ["A", "B", "C", "D"]
+constructTree(root, str)
+printNode(root)
