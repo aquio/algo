@@ -1,0 +1,20 @@
+func permute(str: String, _ prefix: String) {
+    if str.characters.count == 0 {
+        print(prefix)
+    } else {
+        for i in (0..<str.characters.count) {
+            let rem = substr(str, 0, i) + substr(str, i+1, str.characters.count)
+            permute(rem, prefix + String(Array(str.characters)[i]))
+        }
+    }
+}
+
+func substr(str: String, _ start: Int, _ end: Int) -> String {
+    if start == end {
+        return ""
+    } else {
+        return str[str.startIndex.advancedBy(start)..<str.startIndex.advancedBy(end)]
+    }
+}
+
+permute("ABC", "")
