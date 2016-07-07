@@ -1,0 +1,14 @@
+var str = Array("aba".characters)
+
+func perm(str: [Character], _ strSoFar: String) {
+    for i in (0..<str.count) {
+        var arr = str
+        var s = strSoFar
+        arr.removeAtIndex(i)
+        s = s + String(str[i])
+        perm(arr,s)
+        if str.count == 1 {print(s)}
+    }
+}
+
+perm(str,"")
