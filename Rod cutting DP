@@ -1,0 +1,34 @@
+var costs = [0,1,5,8,9,10,17,17,20]
+var n = 8
+
+var T = [[Int]](count: n+1, repeatedValue: [Int](count:n+1, repeatedValue: 0))
+
+for i in (1..<n+1) {
+    for j in (1..<n+1) {
+        T[i][j] = max(i/j * costs[j] + T[i%j][n-1], T[i][j-1])
+    }
+}
+
+for i in (0..<n+1) {
+print(T[i])
+}
+
+func getCuts(n: Int) -> [Int] {
+    var sum = 0
+    var out = [Int]()
+    var j = n
+    var i = n
+    while i > 0 {
+        if T[i][j] > T[i][j-1] {
+            sum = sum + j
+            out.append(j)
+            i = n - sum
+        } else {
+            j = j - 1
+        }
+    }
+    
+    return out
+}
+print()
+print(getCuts(1))
