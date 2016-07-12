@@ -1,0 +1,241 @@
+var a : String = "a"
+var scalar = a.utf8
+print(Array(a.utf16)[0])
+
+
+let b = 97
+var str = String(UnicodeScalar(b))
+print(str)
+
+
+// binary search implementation
+var arr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+
+func BS(arr: [Int], n: Int, low: Int, high: Int) -> Int {
+    let middle = ((high - low) / 2) + low
+    
+    if middle > high {return -1}
+    
+    if n > arr[middle] {
+        let newLow = middle + 1
+        let newHigh = high
+        return BS(arr, n: n, low: newLow, high: newHigh)
+    } else if n < arr[middle] {
+        let newLow = low
+        let newHigh = middle - 1
+        return BS(arr, n: n, low: newLow, high: newHigh)
+    } else {
+        return middle
+    }
+}
+
+print(BS(arr, n: 8, low: 0, high: arr.count - 1))
+
+
+/*
+
+// Tree
+class TreeNode {
+    var val : Int
+    var left : TreeNode?
+    var right : TreeNode?
+
+    init(val: Int, left: TreeNode?, right: TreeNode?) {
+        self.val = val
+        self.left = left
+        self.right = right
+    }
+    
+    init(val: Int) {
+        self.val = val
+        self.left = nil
+        self.right = nil
+    }
+    
+    func isLeaf() -> Bool {
+        if self.left == nil && self.right == nil {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+// Queue
+class Queue {
+    var arr : [TreeNode?]
+    
+    init() {
+        self.arr = [TreeNode?]()
+    }
+    
+    func enqueue(node: TreeNode) {
+        self.arr.append(node)
+    }
+    
+    func dequeue() -> TreeNode? {
+        if self.arr.count > 0 {
+            return arr.removeAtIndex(0)
+        } else {
+            return nil
+        }
+    }
+    
+    func isEmpty() -> Bool {
+        if self.arr.count == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+
+// Stack
+class Stack {
+    var arr : [TreeNode]
+    
+    init() {
+        arr = [TreeNode]()
+    }
+    
+    func push(node : TreeNode) {
+        arr.insert(node, atIndex: 0)
+    }
+    
+    func pop() -> TreeNode? {
+        if self.arr.count > 0 {
+            return self.arr.removeAtIndex(0)
+        } else {
+            return nil
+        }
+    }
+    
+    func isEmpty() -> Bool {
+        if self.arr.count > 0 {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func getSize() -> Int {
+        return self.arr.count
+    }
+}
+
+// create tree
+    let root = TreeNode(val: 1)
+    let node2 = TreeNode(val: 2)
+    let node3 = TreeNode(val: 3)
+    let node4 = TreeNode(val: 4)
+    let node5 = TreeNode(val: 5)
+    let node6 = TreeNode(val: 6)
+    
+    node3.left = node6
+    node2.left = node4
+    node2.right = node5
+    root.left = node2
+    root.right = node3
+
+var depth = 0
+var traversalDFSR = [Int]()
+var depthDFSR = [Int]()
+
+func DFSR (node : TreeNode?, var depth: Int) {
+    if node == nil {
+        return
+    }
+    depth = depth + 1
+    traversalDFSR.append(node!.val)
+    depthDFSR.append(depth)
+    
+    if node!.left != nil {
+        DFSR(node!.left, depth: depth)
+    }
+    
+    if node!.right != nil {
+        DFSR(node!.right, depth: depth)
+    }
+}
+
+DFSR(root, depth: depth)
+print("DFSR traversal: ", terminator: "")
+print(traversalDFSR)
+print("DFSR depth: ", terminator: "")
+print(depthDFSR)
+
+
+
+func DFS() {
+    var traversalArr = [Int]()
+    let stack = Stack()
+    stack.push(root)
+    var depth = 1
+    var depthArr = [Int]()
+    while !stack.isEmpty() {
+        depthArr.append(depth)
+        // pop from stack
+        let node = stack.pop()
+        
+        // add to traversal path
+        traversalArr.append(node!.val)
+        
+        // push node's children into stack
+        if node!.right != nil {
+            stack.push(node!.right!)
+        }
+        
+        if node!.left != nil {
+            stack.push(node!.left!)
+        }
+        
+        if node!.isLeaf() {
+            depth = depth - 1
+        } else {
+            depth = depth + 1
+        }
+    }
+    print("DFS path: ", terminator: "")
+    print(traversalArr)
+    print("DFS depth: ", terminator: "")
+    print(depthArr)
+}
+
+
+// BFS
+func BFS() {
+    
+
+
+    let queue = Queue()
+    var traversalArr = [Int]()
+    // assume root is not nil, start with root
+    queue.enqueue(root)
+    
+    while !queue.isEmpty() {
+        // dequeue node
+        let deqNode = queue.dequeue()
+        
+        // build traversal path
+        if deqNode != nil {
+            traversalArr.append(deqNode!.val)
+        }
+        
+        // enqueue all children
+        if deqNode!.left != nil {
+            queue.enqueue(deqNode!.left!)
+        }
+        if deqNode!.right != nil {
+            queue.enqueue(deqNode!.right!)
+        }
+    }
+    
+    print("BFS path: ", terminator: "")
+    print(traversalArr)
+}
+
+BFS()
+DFS()
+
+*/
