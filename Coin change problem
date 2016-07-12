@@ -1,0 +1,48 @@
+//  Write some awesome Swift code, or import libraries like "Foundation",
+//  "Dispatch", or "Glibc"
+
+var coins = [1,5,6,8]
+var n = 13
+
+var T = [[Int]](count: n+1, repeatedValue: [Int](count:coins.count+1, repeatedValue: 0))
+
+for i in (0..<n+1) {
+    for j in (1..<coins.count+1) {
+        if i < coins[j-1] {
+            T[i][j] = T[i][j-1]
+        }
+        else if i % coins[j-1] == 0 {
+            T[i][j] = i / coins[j-1]
+        } else {
+            if T[i-coins[j-1]][j] == 0 {
+                T[i][j] = T[i][j-1]
+            } else {
+                if T[i][j-1] != 0 {
+                    T[i][j] = min(T[i-coins[j-1]][j] + 1, T[i][j-1])
+                } else {
+                    T[i][j] = T[i-coins[j-1]][j] + 1
+                }
+            }
+        }
+    }
+}
+
+for i in (0..<n+1) {
+    print(String(i) + " " + String(T[i]))
+}
+
+var i = n
+var j = coins.count
+var sum = n
+var out = [Int]()
+while sum > 0 {
+    if T[i][j] < T[i][j-1] {
+        sum = sum - coins[j-1]
+        out.append(coins[j-1])
+        i = i - coins[j-1]
+    } else {
+        j = j - 1
+    }
+}
+
+print(out)
